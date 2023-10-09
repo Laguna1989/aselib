@@ -1,0 +1,20 @@
+#ifndef ASEPRITELIB_FRAME_HEADER_HPP
+#define ASEPRITELIB_FRAME_HEADER_HPP
+
+#include <aseprite_lib/types.hpp>
+#include <istream>
+
+namespace aseprite_lib {
+
+struct FrameHader {
+    Dword_t m_frame_size_in_bytes;
+    Word_t m_magic_number;
+    Word_t m_number_of_chunks; // TODO use better type
+    Word_t m_frame_duration;
+
+    friend std::istream& operator>>(std::istream& is, FrameHader& header);
+};
+
+} // namespace aseprite_lib
+
+#endif // ASEPRITELIB_FRAME_HEADER_HPP
