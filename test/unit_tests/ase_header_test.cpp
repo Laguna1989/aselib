@@ -12,6 +12,7 @@ TEST_CASE("parse m_header correctly", "[header]")
     in >> hdr;
 
     REQUIRE(hdr.m_file_size == 292);
+    REQUIRE(hdr.m_magic_number == 0xA5E0);
 
     REQUIRE(hdr.m_number_of_frames == 1);
 

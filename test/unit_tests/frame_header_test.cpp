@@ -19,6 +19,7 @@ TEST_CASE("parse frame header data correctly", "[header]")
 
     REQUIRE(frameHader.m_number_of_chunks == 5);
     REQUIRE(frameHader.m_frame_duration == 100);
+    REQUIRE(frameHader.m_magic_number == 0xF1FA);
 }
 
 TEST_CASE("parse frame header size correctly", "[header]")

@@ -19,6 +19,7 @@ TEST_CASE("parse chunk m_header set correct stream position", "[header]")
     in >> frameHeader;
     REQUIRE(in.tellg() == 128 + 16);
     REQUIRE(frameHeader.m_number_of_chunks == 5);
+    REQUIRE(frameHeader.m_magic_number == 0xF1FA);
     (void)parseChunkHeader(in);
     REQUIRE(in.tellg() == 128 + 16 + 6);
 }

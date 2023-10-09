@@ -8,12 +8,15 @@
 namespace aseprite_lib {
 
 struct Image {
-    std::uint32_t m_width;
-    std::uint32_t m_height;
+    std::uint32_t m_width {};
+    std::uint32_t m_height {};
 
-    std::vector<PixelDataRGBA> m_pixels;
+    std::vector<PixelDataRGBA> m_pixels {};
 
-    std::size_t posToIndex(std::uint32_t x, std::uint32_t y) const;
+    PixelDataRGBA& getPixelAt(std::uint32_t x, std::uint32_t y);
+    [[nodiscard]] PixelDataRGBA const& getPixelAt(std::uint32_t x, std::uint32_t y) const;
+
+    [[nodiscard]] std::size_t posToIndex(std::uint32_t x, std::uint32_t y) const;
 };
 
 } // namespace aseprite_lib
