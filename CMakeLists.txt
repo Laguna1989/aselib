@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(AsepriteLib VERSION 0.0.1 LANGUAGES CXX)
+project(aselib VERSION 0.0.1 LANGUAGES CXX)
 
 option(ASE_LIB_ENABLE_UNIT_TESTS "Enable unit tests" ON)
 

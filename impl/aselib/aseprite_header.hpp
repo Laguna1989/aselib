@@ -1,7 +1,7 @@
 #ifndef OPENALPP_SOUND_DATA_INCLUDE_HPP
 #define OPENALPP_SOUND_DATA_INCLUDE_HPP
 
-#include <aseprite_lib/types.hpp>
+#include <aselib/types.hpp>
 #include <istream>
 #include <ostream>
 

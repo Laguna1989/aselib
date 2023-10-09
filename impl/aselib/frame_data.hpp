@@ -1,8 +1,8 @@
 #ifndef ASEPRITELIB_FRAME_DATA_HPP
 #define ASEPRITELIB_FRAME_DATA_HPP
 
-#include <aseprite_lib/chunk_data.hpp>
-#include <aseprite_lib/frame_header.hpp>
+#include <aselib/chunk_data.hpp>
+#include <aselib/frame_header.hpp>
 namespace aseprite_lib {
 
 struct FrameData {

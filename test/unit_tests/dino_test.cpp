@@ -1,5 +1,5 @@
 #include "catch2/catch.hpp"
-#include <aseprite_lib/aseprite_data.hpp>
+#include <aselib/aseprite_data.hpp>
 
 using namespace aseprite_lib;
 

@@ -1,7 +1,7 @@
 #ifndef ASEPRITELIB_PIXEL_DATA_HPP
 #define ASEPRITELIB_PIXEL_DATA_HPP
 
-#include <aseprite_lib/types.hpp>
+#include <aselib/types.hpp>
 #include <vector>
 
 namespace aseprite_lib {

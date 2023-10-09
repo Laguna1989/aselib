@@ -1,5 +1,5 @@
 #include "aseprite_header.hpp"
-#include <aseprite_lib/parse_functions.hpp>
+#include <aselib/parse_functions.hpp>
 
 std::istream& aseprite_lib::operator>>(std::istream& is, aseprite_lib::AsepriteHeader& header)
 {

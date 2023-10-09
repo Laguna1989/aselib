@@ -1,6 +1,6 @@
 #include "chunk_data.hpp"
 #include "pixel_data.hpp"
-#include <aseprite_lib/parse_functions.hpp>
+#include <aselib/parse_functions.hpp>
 #include <cstring>
 #include <sstream>
 #include <zlib.h>

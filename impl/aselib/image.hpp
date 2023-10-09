@@ -1,7 +1,7 @@
 #ifndef ASEPRITELIB_IMAGE_HPP
 #define ASEPRITELIB_IMAGE_HPP
 
-#include <aseprite_lib/pixel_data.hpp>
+#include <aselib/pixel_data.hpp>
 #include <cstdint>
 #include <vector>
 

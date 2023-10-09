@@ -1,8 +1,8 @@
 #ifndef ASEPRITELIB_IMAGE_BUILDER_HPP
 #define ASEPRITELIB_IMAGE_BUILDER_HPP
 
-#include <aseprite_lib/aseprite_data.hpp>
-#include <aseprite_lib/image.hpp>
+#include <aselib/aseprite_data.hpp>
+#include <aselib/image.hpp>
 
 namespace aseprite_lib {
 

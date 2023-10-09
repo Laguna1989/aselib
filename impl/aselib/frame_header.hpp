@@ -1,7 +1,7 @@
 #ifndef ASEPRITELIB_FRAME_HEADER_HPP
 #define ASEPRITELIB_FRAME_HEADER_HPP
 
-#include <aseprite_lib/types.hpp>
+#include <aselib/types.hpp>
 #include <istream>
 
 namespace aseprite_lib {

@@ -1,8 +1,8 @@
 #ifndef ASEPRITELIB_CHUNK_DATA_HPP
 #define ASEPRITELIB_CHUNK_DATA_HPP
 
-#include <aseprite_lib/pixel_data.hpp>
-#include <aseprite_lib/types.hpp>
+#include <aselib/pixel_data.hpp>
+#include <aselib/types.hpp>
 #include <istream>
 #include <vector>
 

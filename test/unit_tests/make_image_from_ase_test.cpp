@@ -1,6 +1,6 @@
 #include "catch2/catch.hpp"
-#include <aseprite_lib/aseprite_data.hpp>
-#include <aseprite_lib/image_builder.hpp>
+#include <aselib/aseprite_data.hpp>
+#include <aselib/image_builder.hpp>
 #include <fstream>
 
 using namespace aseprite_lib;
