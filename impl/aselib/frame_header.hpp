@@ -9,7 +9,7 @@ namespace aseprite_lib {
 struct FrameHader {
     Dword_t m_frame_size_in_bytes;
     Word_t m_magic_number;
-    Word_t m_number_of_chunks; // TODO use better type
+    Dword_t m_number_of_chunks;
     Word_t m_frame_duration;
 
     friend std::istream& operator>>(std::istream& is, FrameHader& header);

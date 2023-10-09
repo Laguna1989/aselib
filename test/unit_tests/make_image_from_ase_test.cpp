@@ -34,15 +34,15 @@ TEST_CASE("makeImageFromAse", "[image]")
     REQUIRE(img.m_pixels[img.posToIndex(83, 10)].b == 27);
     REQUIRE(img.m_pixels[img.posToIndex(83, 10)].a == 255);
 
-    //    REQUIRE(img.m_pixels[img.posToIndex(270, 12)].r == 138);
-    //    REQUIRE(img.m_pixels[img.posToIndex(270, 12)].g == 122);
-    //    REQUIRE(img.m_pixels[img.posToIndex(270, 12)].b == 87);
-    //    REQUIRE(img.m_pixels[img.posToIndex(270, 12)].a == 255);
+    REQUIRE(img.m_pixels[img.posToIndex(270, 12)].r == 138);
+    REQUIRE(img.m_pixels[img.posToIndex(270, 12)].g == 122);
+    REQUIRE(img.m_pixels[img.posToIndex(270, 12)].b == 87);
+    REQUIRE(img.m_pixels[img.posToIndex(270, 12)].a == 255);
 
-    //    REQUIRE(img.m_pixels[img.posToIndex(401, 14)].r == 40);
-    //    REQUIRE(img.m_pixels[img.posToIndex(401, 14)].g == 87);
-    //    REQUIRE(img.m_pixels[img.posToIndex(401, 14)].b == 63);
-    //    REQUIRE(img.m_pixels[img.posToIndex(401, 14)].a == 255);
+    REQUIRE(img.m_pixels[img.posToIndex(401, 14)].r == 40);
+    REQUIRE(img.m_pixels[img.posToIndex(401, 14)].g == 87);
+    REQUIRE(img.m_pixels[img.posToIndex(401, 14)].b == 63);
+    REQUIRE(img.m_pixels[img.posToIndex(401, 14)].a == 255);
 
     REQUIRE(img.m_pixels[img.posToIndex(407, 17)].r == 0);
     REQUIRE(img.m_pixels[img.posToIndex(407, 17)].g == 0);

@@ -114,11 +114,11 @@ void aseprite_lib::parseNextChunk(std::istream& is, ChunksData& data)
         CelChunk cc {};
         cc.m_header = hdr;
         cc.m_layer_index = parseWord(is);
-        cc.m_pos_x = parseWord(is); // TODO signed/unsigned conversion
-        cc.m_pos_y = parseWord(is); // TODO signed/unsigned conversion
+        cc.m_pos_x = parseShort(is);
+        cc.m_pos_y = parseShort(is);
         cc.m_opacity = parseByte(is);
         cc.m_cell_type = parseWord(is);
-        cc.m_z_index = parseWord(is); // TODO signed/unsigned conversion
+        cc.m_z_index = parseShort(is);
         is.ignore(5);
         if (cc.m_cell_type != 2) {
             throw std::invalid_argument { "unsupported cell type "
@@ -198,11 +198,12 @@ void aseprite_lib::parseNextChunk(std::istream& is, ChunksData& data)
             + std::to_string(hdr.m_chunk_type) };
     }
 }
+
 aseprite_lib::ChunksData aseprite_lib::parseAllChunks(
     std::istream& is, std::uint16_t number_of_chunks)
 {
     ChunksData chunks {};
-    for (int i = 0; i != number_of_chunks; ++i) {
+    for (std::uint16_t i = 0u; i != number_of_chunks; ++i) {
         parseNextChunk(is, chunks);
     }
 

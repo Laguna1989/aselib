@@ -54,7 +54,7 @@ struct CelChunk {
     Short_t m_pos_y;
     Byte_t m_opacity;
     Word_t m_cell_type;
-    Byte_t m_z_index;
+    Short_t m_z_index;
     Word_t m_cell_width;
     Word_t m_cell_height;
     std::vector<PixelDataRGBA> m_pixels_rgba;

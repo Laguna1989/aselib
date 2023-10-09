@@ -8,6 +8,9 @@ std::istream& aseprite_lib::operator>>(std::istream& is, aseprite_lib::FrameHade
     header.m_number_of_chunks = parseWord(is);
     header.m_frame_duration = parseWord(is);
     is.ignore(2); // for future use
-    is.ignore(4);
+    auto const number_of_chunks_new = parseDword(is);
+    if (number_of_chunks_new != 0) {
+        header.m_number_of_chunks = number_of_chunks_new;
+    }
     return is;
 }
