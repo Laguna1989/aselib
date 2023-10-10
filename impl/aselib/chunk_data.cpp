@@ -19,7 +19,7 @@ std::string decompress(const std::string& str)
     zs.avail_in = static_cast<uInt>(str.size());
 
     int ret;
-    char outbuffer[10240];
+    char outbuffer[256];
     std::string outstring;
 
     // get the decompressed bytes blockwise using repeated calls to inflate
@@ -58,7 +58,7 @@ aselib::ChunkHeader aselib::parseChunkHeader(std::istream& is)
 
 void aselib::parseNextChunk(std::istream& is, ChunksData& data)
 {
-    ChunkHeader hdr = parseChunkHeader(is);
+    ChunkHeader const hdr = parseChunkHeader(is);
 
     if (hdr.m_chunk_type == 0x2007) {
         // color profile chunk
@@ -130,10 +130,10 @@ void aselib::parseNextChunk(std::istream& is, ChunksData& data)
         auto const chunk_header_size = 6;
         auto const chunk_data_offset = 20 + chunk_header_size;
         auto const data_size = cc.m_header.m_chunk_size - chunk_data_offset;
-        std::string compressed_data;
+        std::string compressed_data {};
         compressed_data.resize(data_size);
         is.read(compressed_data.data(), compressed_data.size());
-        std::string uncompressed_data = decompress(compressed_data);
+        std::string const uncompressed_data = decompress(compressed_data);
 
         auto const length = uncompressed_data.length();
         if (length != cc.m_cell_height * cc.m_cell_width * 4) {
@@ -144,12 +144,14 @@ void aselib::parseNextChunk(std::istream& is, ChunksData& data)
         for (auto j = 0u; j != cc.m_cell_height; ++j) {
             for (auto i = 0u; i != cc.m_cell_width; ++i) {
                 auto const idx_ofs = (i + j * cc.m_cell_width) * 4;
-                PixelDataRGBA col {};
-                col.r = static_cast<Byte_t>(uncompressed_data[idx_ofs + 0]);
-                col.g = static_cast<Byte_t>(uncompressed_data[idx_ofs + 1]);
-                col.b = static_cast<Byte_t>(uncompressed_data[idx_ofs + 2]);
-                col.a = static_cast<Byte_t>(uncompressed_data[idx_ofs + 3]);
-                cc.m_pixels_rgba.emplace_back(col);
+                cc.m_pixels_rgba.emplace_back(PixelDataRGBA {
+                    // clang-format off
+                        static_cast<Byte_t>(uncompressed_data[idx_ofs + 0]),
+                        static_cast<Byte_t>(uncompressed_data[idx_ofs + 1]),
+                        static_cast<Byte_t>(uncompressed_data[idx_ofs + 2]),
+                        static_cast<Byte_t>(uncompressed_data[idx_ofs + 3])
+                    // clang-format on
+                });
             }
         }
 
@@ -189,7 +191,7 @@ void aselib::parseNextChunk(std::istream& is, ChunksData& data)
         }
         if (udc.m_user_data_flags & 4) {
             // TODO implement properties
-            
+
             //            Dword_t const numberOfPropertyMaps = parseDword(is);
             throw std::invalid_argument { "cannot read properties until now" };
         }

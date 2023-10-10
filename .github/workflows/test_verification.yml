@@ -1,0 +1,136 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  Linux_gcc:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        gccver: [ 9, 10, 11 ]
+    steps:
+      - name: Set up cmake
+        uses: jwlawson/actions-setup-cmake@v1.11
+        with:
+          cmake-version: '3.26.x'
+
+      - name: Set up gcc
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: ${{ matrix.gccver }}
+          platform: x64
+
+      - uses: actions/checkout@v2
+
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1
+        with:
+          key: ${{ github.job }}-${{ matrix.gccver }}-${{ matrix.os }}
+          max-size: 100M
+
+      - name: CMake
+        run: |
+          cmake \
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+          -B ${{github.workspace}}/build .
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: make aselib aselib_test -j
+
+      - name: CopyAssets
+        run: cp -r ${{github.workspace}}/assets ${{github.workspace}}/build/test/unit_tests/
+
+      - name: Test
+        run: ./aselib_test
+        working-directory: ${{github.workspace}}/build/test/unit_tests
+
+  #  Windows:
+  #    runs-on: windows-2019
+  #    steps:
+  #      - name: Set up cmake
+  #        uses: jwlawson/actions-setup-cmake@v1.11
+  #        with:
+  #          cmake-version: '3.26.x'
+  #
+  #      - uses: actions/checkout@v2
+  #
+  #      - name: CMake
+  #        run: cmake -B ${{github.workspace}}/build . -DOALPP_STATIC_LIBRARY=ON
+  #
+  #      - name: Build
+  #        working-directory: ${{github.workspace}}/build
+  #        run: cmake --build .
+  #
+  #      - name: Test
+  #        working-directory: ${{github.workspace}}/build
+  #        run: test/unit_tests/Debug/OpenALpp_UnitTests.exe --order rand
+
+  Web:
+    runs-on: ubuntu-latest
+    env:
+      EMCC_CCACHE: 1
+    steps:
+      - name: Set up cmake
+        uses: jwlawson/actions-setup-cmake@v1.11
+        with:
+          cmake-version: '3.26.x'
+
+      - name: Set up gcc
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: 9
+          platform: x64
+
+      - uses: mymindstorm/setup-emsdk@v11
+
+      - uses: actions/checkout@v2
+
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1
+        with:
+          key: ${{ github.job }}-${{ matrix.os }}-${{ matrix.type }}
+          max-size: 100M
+
+      - name: CMake
+        run: |
+          emcmake cmake -B ${{github.workspace}}/build \
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+           .
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: emmake make aselib aselib_test
+
+  Mac_clang:
+    runs-on: macos-latest
+    steps:
+      - name: Set up cmake
+        uses: jwlawson/actions-setup-cmake@v1.11
+        with:
+          cmake-version: '3.26.x'
+
+      - name: Install dependencies
+        run: |
+          brew install cmake ninja
+
+      - uses: actions/checkout@v2
+
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1
+        with:
+          key: ${{ github.job }}-${{ matrix.os }}
+          max-size: 100M
+
+      - name: CMake
+        run: |
+          cmake \
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+          -B ${{github.workspace}}/build .
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: make aselib aselib_test -j 4
