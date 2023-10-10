@@ -1,7 +1,7 @@
 #include "aseprite_header.hpp"
 #include <aselib/parse_functions.hpp>
 
-std::istream& aseprite_lib::operator>>(std::istream& is, aseprite_lib::AsepriteHeader& header)
+std::istream& aselib::operator>>(std::istream& is, aselib::AsepriteHeader& header)
 {
     header.m_file_size = parseDword(is);
     header.m_magic_number = parseWord(is);

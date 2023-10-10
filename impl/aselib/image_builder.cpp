@@ -1,6 +1,6 @@
 #include "image_builder.hpp"
 
-aseprite_lib::Image aseprite_lib::makeImageFromAse(aseprite_lib::AsepriteData const& ase)
+aselib::Image aselib::makeImageFromAse(aselib::AsepriteData const& ase)
 {
     Image img {};
 
@@ -38,8 +38,8 @@ aseprite_lib::Image aseprite_lib::makeImageFromAse(aseprite_lib::AsepriteData co
     return img;
 }
 
-aseprite_lib::Image aseprite_lib::makeImageFromLayer(
-    aseprite_lib::AsepriteData const& ase, std::string const& layerName)
+aselib::Image aselib::makeImageFromLayer(
+    aselib::AsepriteData const& ase, std::string const& layerName)
 {
     Image img {};
 

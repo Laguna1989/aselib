@@ -3,13 +3,13 @@
 
 #include <aselib/chunk_data.hpp>
 #include <aselib/frame_header.hpp>
-namespace aseprite_lib {
+namespace aselib {
 
 struct FrameData {
     FrameHader m_frame_header;
     ChunksData m_chunks;
 };
 
-} // namespace aseprite_lib
+} // namespace aselib
 
 #endif // ASEPRITELIB_FRAME_DATA_HPP

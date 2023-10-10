@@ -2,7 +2,7 @@
 #include <fstream>
 #include <istream>
 
-aseprite_lib::AsepriteData::AsepriteData(std::string const& file_name)
+aselib::AsepriteData::AsepriteData(std::string const& file_name)
 {
     std::ifstream in { file_name, std::ios::binary };
     if (!in.good()) {

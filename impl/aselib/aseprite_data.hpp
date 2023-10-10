@@ -5,7 +5,7 @@
 #include <aselib/frame_data.hpp>
 #include <vector>
 
-namespace aseprite_lib {
+namespace aselib {
 
 class AsepriteData {
 public:
@@ -15,5 +15,5 @@ public:
     std::vector<FrameData> m_frames;
 };
 
-} // namespace aseprite_lib
+} // namespace aselib
 #endif // ASEPRITELIB_ASEPRITE_DATA_HPP

@@ -46,7 +46,7 @@ std::string decompress(const std::string& str)
 }
 } // namespace
 
-aseprite_lib::ChunkHeader aseprite_lib::parseChunkHeader(std::istream& is)
+aselib::ChunkHeader aselib::parseChunkHeader(std::istream& is)
 {
     ChunkHeader hdr {};
 
@@ -56,7 +56,7 @@ aseprite_lib::ChunkHeader aseprite_lib::parseChunkHeader(std::istream& is)
     return hdr;
 }
 
-void aseprite_lib::parseNextChunk(std::istream& is, ChunksData& data)
+void aselib::parseNextChunk(std::istream& is, ChunksData& data)
 {
     ChunkHeader hdr = parseChunkHeader(is);
 
@@ -188,8 +188,9 @@ void aseprite_lib::parseNextChunk(std::istream& is, ChunksData& data)
             udc.m_color_a = parseByte(is);
         }
         if (udc.m_user_data_flags & 4) {
-            Dword_t const numberOfPropertyMaps = parseDword(is);
             // TODO implement properties
+            
+            //            Dword_t const numberOfPropertyMaps = parseDword(is);
             throw std::invalid_argument { "cannot read properties until now" };
         }
         data.m_user_data_chunks.emplace_back(udc);
@@ -199,8 +200,7 @@ void aseprite_lib::parseNextChunk(std::istream& is, ChunksData& data)
     }
 }
 
-aseprite_lib::ChunksData aseprite_lib::parseAllChunks(
-    std::istream& is, std::uint16_t number_of_chunks)
+aselib::ChunksData aselib::parseAllChunks(std::istream& is, std::uint16_t number_of_chunks)
 {
     ChunksData chunks {};
     for (std::uint16_t i = 0u; i != number_of_chunks; ++i) {

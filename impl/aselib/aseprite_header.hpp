@@ -5,7 +5,7 @@
 #include <istream>
 #include <ostream>
 
-namespace aseprite_lib {
+namespace aselib {
 
 struct AsepriteHeader {
     Dword_t m_file_size;
@@ -26,10 +26,10 @@ struct AsepriteHeader {
     Short_t m_grid_pos_y;
     Word_t m_grid_width;
     Word_t m_grid_height;
-
-    friend std::istream& operator>>(std::istream& os, AsepriteHeader& header);
 };
 
-} // namespace aseprite_lib
+std::istream& operator>>(std::istream& os, AsepriteHeader& header);
+
+} // namespace aselib
 
 #endif // OPENALPP_SOUND_DATA_INCLUDE_HPP

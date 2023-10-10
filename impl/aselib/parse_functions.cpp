@@ -1,6 +1,6 @@
 #include "parse_functions.hpp"
 
-std::uint8_t aseprite_lib::parseByte(std::istream& is)
+std::uint8_t aselib::parseByte(std::istream& is)
 {
     char b1;
     is.get(b1);
@@ -10,7 +10,7 @@ std::uint8_t aseprite_lib::parseByte(std::istream& is)
     return static_cast<std::uint8_t>(b1);
 }
 
-std::uint16_t aseprite_lib::parseWord(std::istream& is)
+std::uint16_t aselib::parseWord(std::istream& is)
 {
     char b[2];
 
@@ -29,7 +29,7 @@ std::uint16_t aseprite_lib::parseWord(std::istream& is)
     );
 }
 
-std::int16_t aseprite_lib::parseShort(std::istream& is)
+std::int16_t aselib::parseShort(std::istream& is)
 {
     // TODO signed/unsigned conversion
     char b[2];
@@ -49,7 +49,7 @@ std::int16_t aseprite_lib::parseShort(std::istream& is)
     );
 }
 
-std::uint32_t aseprite_lib::parseDword(std::istream& is)
+std::uint32_t aselib::parseDword(std::istream& is)
 {
     char b[4] = { 0, 0, 0, 0 };
     is.get(b[0]);
@@ -69,7 +69,7 @@ std::uint32_t aseprite_lib::parseDword(std::istream& is)
     );
 }
 
-std::string aseprite_lib::parseString(std::istream& is)
+std::string aselib::parseString(std::istream& is)
 {
     auto const size = parseWord(is);
     std::string str {};

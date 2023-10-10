@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace aseprite_lib {
+namespace aselib {
 
 struct Image {
     std::uint32_t m_width {};
@@ -19,6 +19,6 @@ struct Image {
     [[nodiscard]] std::size_t posToIndex(std::uint32_t x, std::uint32_t y) const;
 };
 
-} // namespace aseprite_lib
+} // namespace aselib
 
 #endif // ASEPRITELIB_IMAGE_HPP

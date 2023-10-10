@@ -3,7 +3,7 @@
 #include <aselib/frame_header.hpp>
 #include <fstream>
 
-using namespace aseprite_lib;
+using namespace aselib;
 
 TEST_CASE("parse frame header data correctly", "[header]")
 {

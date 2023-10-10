@@ -3,7 +3,7 @@
 #include <aselib/image_builder.hpp>
 #include <fstream>
 
-using namespace aseprite_lib;
+using namespace aselib;
 
 TEST_CASE("makeImageFromAse", "[image]")
 {

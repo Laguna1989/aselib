@@ -1,7 +1,7 @@
 #include "frame_header.hpp"
 #include <aselib/parse_functions.hpp>
 
-std::istream& aseprite_lib::operator>>(std::istream& is, aseprite_lib::FrameHader& header)
+std::istream& aselib::operator>>(std::istream& is, aselib::FrameHader& header)
 {
     header.m_frame_size_in_bytes = parseDword(is);
     header.m_magic_number = parseWord(is);

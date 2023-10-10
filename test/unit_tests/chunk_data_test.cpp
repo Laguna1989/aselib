@@ -4,7 +4,7 @@
 #include <aselib/frame_header.hpp>
 #include <aselib/parse_functions.hpp>
 #include <fstream>
-using namespace aseprite_lib;
+using namespace aselib;
 
 TEST_CASE("parse chunk m_header set correct stream position", "[header]")
 {

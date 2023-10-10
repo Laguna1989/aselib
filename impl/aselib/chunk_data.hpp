@@ -6,7 +6,7 @@
 #include <istream>
 #include <vector>
 
-namespace aseprite_lib {
+namespace aselib {
 
 struct ChunkHeader {
     Dword_t m_chunk_size;
@@ -100,6 +100,6 @@ ChunkHeader parseChunkHeader(std::istream& is);
 void parseNextChunk(std::istream& is, ChunksData& data);
 ChunksData parseAllChunks(std::istream& is, std::uint16_t number_of_chunks);
 
-} // namespace aseprite_lib
+} // namespace aselib
 
 #endif // ASEPRITELIB_CHUNK_DATA_HPP

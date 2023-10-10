@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <istream>
 
-namespace aseprite_lib {
+namespace aselib {
 
 std::uint8_t parseByte(std::istream& is);
 
@@ -16,6 +16,6 @@ std::uint32_t parseDword(std::istream& is);
 
 std::string parseString(std::istream& is);
 
-} // namespace aseprite_lib
+} // namespace aselib
 
 #endif // ASEPRITELIB_PARSE_FUNCTIONS_HPP

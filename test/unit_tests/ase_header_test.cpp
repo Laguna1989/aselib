@@ -2,7 +2,7 @@
 #include <aselib/aseprite_header.hpp>
 #include <fstream>
 
-using namespace aseprite_lib;
+using namespace aselib;
 
 TEST_CASE("parse m_header correctly", "[header]")
 {
