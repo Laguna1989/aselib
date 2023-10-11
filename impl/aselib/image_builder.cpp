@@ -57,10 +57,6 @@ aselib::Image aselib::makeImageFromAse(aselib::AsepriteData const& ase)
         std::uint32_t frame_offset_x = i * ase.m_header.m_width_in_pixel;
         auto const& f = ase.m_frames[i];
 
-        if (f.m_chunks.m_cel_chunks.empty()) {
-            continue;
-        }
-
         for (auto const& cel : f.m_chunks.m_cel_chunks) {
             for (auto x_in_cel = 0; x_in_cel != cel.m_cell_width; ++x_in_cel) {
                 for (auto y_in_cel = 0; y_in_cel != cel.m_cell_height; ++y_in_cel) {
@@ -85,10 +81,6 @@ aselib::Image aselib::makeImageFromLayer(
     aselib::AsepriteData const& ase, std::string const& layerName)
 {
     Image img {};
-
-    if (ase.m_frames[0].m_chunks.m_layers_chunks.empty()) {
-        throw std::invalid_argument { "no layer information in first frame" };
-    }
 
     bool found = false;
     std::uint16_t layerID = 0;
@@ -115,11 +107,7 @@ aselib::Image aselib::makeImageFromLayer(
 
         std::uint32_t frame_offset_x = i * ase.m_header.m_width_in_pixel;
         auto const& f = ase.m_frames[i];
-
-        if (f.m_chunks.m_cel_chunks.empty()) {
-            continue;
-        }
-
+        
         for (auto const& cel : f.m_chunks.m_cel_chunks) {
             if (cel.m_layer_index != layerID) {
                 continue;
