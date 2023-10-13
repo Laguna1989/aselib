@@ -1,5 +1,5 @@
-#include "catch2/catch.hpp"
 #include <aselib/pixel_data.hpp>
+#include <catch2/catch.hpp>
 
 using namespace aselib;
 

@@ -1,6 +1,6 @@
-#include "aselib/constants.hpp"
-#include "catch2/catch.hpp"
 #include <aselib/aseprite_data.hpp>
+#include <aselib/constants.hpp>
+#include <catch2/catch.hpp>
 
 using namespace aselib;
 
