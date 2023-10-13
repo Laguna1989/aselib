@@ -7,11 +7,14 @@
 namespace aselib {
 
 struct PixelDataRGBA {
-    aselib::Byte_t r;
-    aselib::Byte_t g;
-    aselib::Byte_t b;
-    aselib::Byte_t a;
+    Byte_t r { 0u };
+    Byte_t g { 0u };
+    Byte_t b { 0u };
+    Byte_t a { 0u };
 };
+
+bool operator==(PixelDataRGBA const& lhs, PixelDataRGBA const& rhs);
+bool operator!=(PixelDataRGBA const& lhs, PixelDataRGBA const& rhs);
 
 } // namespace aselib
 

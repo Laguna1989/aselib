@@ -1,41 +1,14 @@
 #include "catch2/catch.hpp"
-#include <aselib/aseprite_header.hpp>
-#include <aselib/chunk_data.hpp>
-#include <aselib/frame_header.hpp>
+#include <aselib/aseprite_data.hpp>
 #include <aselib/parse_functions.hpp>
-#include <fstream>
+
 using namespace aselib;
 
-TEST_CASE("parse chunk m_header set correct stream position", "[header]")
+TEST_CASE("chunk data", "[chunk]")
 {
-    std::ifstream in { "assets/test/unit/32_bit_1x1_white.aseprite", std::ios::binary };
-    REQUIRE(in.good());
-    AsepriteHeader hdr {};
-    in >> hdr;
+    AsepriteData ase { "assets/test/unit/32_bit_1x1_white.aseprite" };
 
-    REQUIRE(hdr.m_number_of_frames == 1);
-
-    FrameHader frameHeader {};
-    in >> frameHeader;
-    REQUIRE(in.tellg() == 128 + 16);
-    REQUIRE(frameHeader.m_number_of_chunks == 5);
-    REQUIRE(frameHeader.m_magic_number == 0xF1FA);
-    (void)parseChunkHeader(in);
-    REQUIRE(in.tellg() == 128 + 16 + 6);
-}
-
-TEST_CASE("chunk data", "[header, chunk]")
-{
-    std::ifstream in { "assets/test/unit/32_bit_1x1_white.aseprite", std::ios::binary };
-    REQUIRE(in.good());
-    AsepriteHeader header {};
-    in >> header;
-
-    REQUIRE(header.m_number_of_frames == 1);
-
-    FrameHader frameHader {};
-    in >> frameHader;
-    auto const chunks = parseAllChunks(in, frameHader.m_number_of_chunks);
+    auto const chunks = ase.m_frames.front().m_chunks;
 
     SECTION("color profile")
     {
@@ -90,4 +63,40 @@ TEST_CASE("chunk data", "[header, chunk]")
 
     SECTION("tags") { REQUIRE(chunks.m_tag_chunks.size() == 0); }
     SECTION("user data") { REQUIRE(chunks.m_tag_chunks.size() == 0); }
+}
+
+TEST_CASE("UserData Chunk", "[chunk, user data]")
+{
+    AsepriteData const ase { "assets/test/unit/32bit_1x1_white_with_user_data_string.aseprite" };
+
+    SECTION("text")
+    {
+        REQUIRE(!ase.m_frames.front().m_chunks.m_user_data_chunks.empty());
+        REQUIRE(ase.m_frames.front().m_chunks.m_user_data_chunks.front().m_user_data_flags & 1);
+        REQUIRE(ase.m_frames.front().m_chunks.m_user_data_chunks.front().m_text == "abcd");
+    }
+    SECTION("color")
+    {
+        REQUIRE(!ase.m_frames.front().m_chunks.m_user_data_chunks.empty());
+        REQUIRE(ase.m_frames.front().m_chunks.m_user_data_chunks.front().m_user_data_flags & 2);
+        REQUIRE(ase.m_frames.front().m_chunks.m_user_data_chunks.front().m_color_r == 255);
+        REQUIRE(ase.m_frames.front().m_chunks.m_user_data_chunks.front().m_color_g == 0);
+        REQUIRE(ase.m_frames.front().m_chunks.m_user_data_chunks.front().m_color_b == 0);
+        REQUIRE(ase.m_frames.front().m_chunks.m_user_data_chunks.front().m_color_a == 255);
+    }
+}
+
+TEST_CASE("Tag Chunk", "[chunk, tag]")
+{
+    AsepriteData const ase { "assets/test/unit/32bit_1x1_white_with_user_data_string.aseprite" };
+
+    REQUIRE(!ase.m_frames.front().m_chunks.m_tag_chunks.empty());
+    REQUIRE(ase.m_frames.front().m_chunks.m_tag_chunks.front().m_tags.size() == 1);
+    REQUIRE(ase.m_frames.front().m_chunks.m_tag_chunks.front().m_tags.front().m_tag_name == "tag");
+    REQUIRE(ase.m_frames.front().m_chunks.m_tag_chunks.front().m_tags.front().m_from_frame == 0);
+    REQUIRE(ase.m_frames.front().m_chunks.m_tag_chunks.front().m_tags.front().m_to_frame == 0);
+    REQUIRE(
+        ase.m_frames.front().m_chunks.m_tag_chunks.front().m_tags.front().m_loop_direction == 0);
+    REQUIRE(
+        ase.m_frames.front().m_chunks.m_tag_chunks.front().m_tags.front().m_repeat_animation == 0);
 }
