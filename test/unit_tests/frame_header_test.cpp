@@ -14,12 +14,12 @@ TEST_CASE("parse frame header data correctly", "[header]")
 
     REQUIRE(header.m_number_of_frames == 1);
 
-    FrameHader frameHader {};
-    in >> frameHader;
+    FrameHeader frameHeader {};
+    in >> frameHeader;
 
-    REQUIRE(frameHader.m_number_of_chunks == 5);
-    REQUIRE(frameHader.m_frame_duration == 100);
-    REQUIRE(frameHader.m_magic_number == 0xF1FA);
+    REQUIRE(frameHeader.m_number_of_chunks == 5);
+    REQUIRE(frameHeader.m_frame_duration == 100);
+    REQUIRE(frameHeader.m_magic_number == 0xF1FA);
 }
 
 TEST_CASE("parse frame header size correctly", "[header]")
@@ -29,8 +29,8 @@ TEST_CASE("parse frame header size correctly", "[header]")
     AsepriteHeader header {};
     in >> header;
 
-    FrameHader frameHader;
-    in >> frameHader;
+    FrameHeader frameHeader {};
+    in >> frameHeader;
 
     REQUIRE(in.tellg() == 128 + 16);
 }

@@ -7,7 +7,7 @@
 
 namespace {
 // Decompress an STL string using zlib and return the original data.
-std::string decompress(const std::string& str)
+std::string decompress(std::string const& str)
 {
     z_stream zs; // z_stream is zlib's control structure
     memset(&zs, 0, sizeof(zs));

@@ -11,8 +11,8 @@ class AsepriteData {
 public:
     AsepriteData(std::string const& file_name);
 
-    AsepriteHeader m_header;
-    std::vector<FrameData> m_frames;
+    AsepriteHeader m_header {};
+    std::vector<FrameData> m_frames {};
 };
 
 } // namespace aselib
