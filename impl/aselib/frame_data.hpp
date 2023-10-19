@@ -6,8 +6,8 @@
 namespace aselib {
 
 struct FrameData {
-    FrameHader m_frame_header;
-    ChunksData m_chunks;
+    FrameHeader m_frame_header {};
+    ChunksData m_chunks {};
 };
 
 } // namespace aselib

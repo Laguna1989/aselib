@@ -15,7 +15,7 @@ TEST_CASE("parse first chunk header results in correct stream offset", "[header]
 
     REQUIRE(hdr.m_number_of_frames == 1);
 
-    FrameHader frameHeader {};
+    FrameHeader frameHeader {};
     in >> frameHeader;
     REQUIRE(in.tellg() == 128 + 16);
     (void)parseChunkHeader(in);
