@@ -1,3 +1,7 @@
+[![Build Status](https://github.com/Laguna1989/aselib/actions/workflows/test_verification.yml/badge.svg)](https://github.com/Laguna1989/aselib/actions/workflows/unittests.yml)
+
+# About
+
 This is a c++17 library to parse `*.aseprite` files. Please check out and
 support [this awesome pixelart program](https://www.aseprite.org/)!
 
