@@ -37,3 +37,11 @@ aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataRGBA const& pixel
         // clang-format on
     };
 }
+aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataGrayscale const& pixel_src,
+    aselib::PixelDataRGBA const& pixel_orig, std::uint8_t layer_opacity)
+{
+    aselib::PixelDataRGBA const pixel_src_rgba { pixel_src.v, pixel_src.v, pixel_src.v,
+        pixel_src.a };
+
+    return aselib::add_pixel_color(pixel_src_rgba, pixel_orig, layer_opacity);
+}

@@ -6,7 +6,7 @@
 
 using namespace aselib;
 
-TEST_CASE("make image from rgba ase with one layer", "[image]")
+TEST_CASE("make image from rgba ase with one layer", "[image, rgba]")
 {
     AsepriteData const ase { "assets/test/unit/dino_salto.aseprite" };
 
@@ -24,7 +24,7 @@ TEST_CASE("make image from rgba ase with one layer", "[image]")
     REQUIRE(img.m_pixels[img.posToIndex(407, 17)] == PixelDataRGBA { 0, 0, 0, 0 });
 }
 
-TEST_CASE("make image from grayscale ase with one layer", "[image]")
+TEST_CASE("make image from grayscale ase with one layer", "[image, grayscale]")
 {
     AsepriteData const ase { "assets/test/unit/16_bit_8x1_transition.aseprite" };
 
@@ -43,7 +43,7 @@ TEST_CASE("make image from grayscale ase with one layer", "[image]")
     REQUIRE(img.m_pixels[img.posToIndex(7, 0)] == PixelDataRGBA { 0xff, 0xff, 0xff, 255 });
 }
 
-TEST_CASE("make image from ase with multiple layers", "[image]")
+TEST_CASE("make image from rgba ase with multiple layers", "[image, rgba]")
 {
     AsepriteData ase { "assets/test/unit/miner.aseprite" };
 
@@ -56,7 +56,7 @@ TEST_CASE("make image from ase with multiple layers", "[image]")
     REQUIRE(img.getPixelAt(14, 15) == PixelDataRGBA { 43, 41, 40, 255 });
 }
 
-TEST_CASE("make image from ase with multiple layers and invisible layer", "[image]")
+TEST_CASE("make image from rgba ase with multiple layers and invisible layer", "[image, rgba]")
 {
     AsepriteData ase { "assets/test/unit/miner.aseprite" };
 
@@ -77,7 +77,7 @@ TEST_CASE("make image from ase with multiple layers and invisible layer", "[imag
     REQUIRE(img.m_pixels[img.posToIndex(14, 15)] == PixelDataRGBA { 0, 0, 0, 0 });
 }
 
-TEST_CASE("make image from ase with two layers and opacity", "[image]")
+TEST_CASE("make image from rgba ase with two layers and opacity", "[image, rgba]")
 {
     AsepriteData const ase {
         "assets/test/unit/32_bit_2x2_white_with_transparent_overlay.aseprite"
