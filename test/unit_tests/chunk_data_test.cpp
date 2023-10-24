@@ -4,7 +4,7 @@
 
 using namespace aselib;
 
-TEST_CASE("chunk data", "[chunk]")
+TEST_CASE("chunk data for rgba file", "[chunk]")
 {
     AsepriteData ase { "assets/test/unit/32_bit_1x1_white.aseprite" };
 
@@ -99,4 +99,16 @@ TEST_CASE("Tag Chunk", "[chunk, tag]")
         ase.m_frames.front().m_chunks.m_tag_chunks.front().m_tags.front().m_loop_direction == 0);
     REQUIRE(
         ase.m_frames.front().m_chunks.m_tag_chunks.front().m_tags.front().m_repeat_animation == 0);
+}
+
+TEST_CASE("Cel Chunk for Grayscale", "[chunk, tag]")
+{
+    AsepriteData const ase { "assets/test/unit/16_bit_8x1_transition.aseprite" };
+
+    REQUIRE(ase.m_header.m_color_depth == 16);
+
+    REQUIRE(!ase.m_frames.front().m_chunks.m_cel_chunks.empty());
+    auto const& cel = ase.m_frames.front().m_chunks.m_cel_chunks.front();
+    REQUIRE(cel.m_pixels_rgba.empty());
+    REQUIRE(cel.m_pixels_grayscale.size() == 8);
 }

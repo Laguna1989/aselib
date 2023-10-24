@@ -2,6 +2,19 @@
 #include <aselib/constants.hpp>
 #include <aselib/pixel_operations.hpp>
 
+namespace {
+// TODO move to pixel_operations.hpp and test separately
+aselib::PixelDataRGBA add_pixel_color(aselib::PixelDataGrayscale const& pixel_src,
+    aselib::PixelDataRGBA const& pixel_orig, std::uint8_t layer_opacity)
+{
+    aselib::PixelDataRGBA const pixel_src_rgba { pixel_src.v, pixel_src.v, pixel_src.v,
+        pixel_src.a };
+
+    return aselib::add_pixel_color(pixel_src_rgba, pixel_orig, layer_opacity);
+}
+
+} // namespace
+
 aselib::Image aselib::makeImageFromAse(
     aselib::AsepriteData const& ase, bool include_invisible_layers)
 {
@@ -40,14 +53,19 @@ aselib::Image aselib::makeImageFromAse(
                 for (auto y_in_cel = 0; y_in_cel != cel.m_cell_height; ++y_in_cel) {
                     auto const x_in_frame = x_in_cel + cel.m_pos_x;
                     auto const y_in_frame = y_in_cel + cel.m_pos_y;
-
-                    auto const& pixel_src
-                        = cel.m_pixels_rgba[x_in_cel + y_in_cel * cel.m_cell_width];
                     auto const& pixel_orig
                         = img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame);
-
-                    img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
-                        = add_pixel_color(pixel_src, pixel_orig, layer_opacity);
+                    if (ase.m_header.m_color_depth == 32) {
+                        auto const& pixel_src
+                            = cel.m_pixels_rgba[x_in_cel + y_in_cel * cel.m_cell_width];
+                        img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
+                            = add_pixel_color(pixel_src, pixel_orig, layer_opacity);
+                    } else if (ase.m_header.m_color_depth == 16) {
+                        auto const& pixel_src
+                            = cel.m_pixels_grayscale[x_in_cel + y_in_cel * cel.m_cell_width];
+                        img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
+                            = ::add_pixel_color(pixel_src, pixel_orig, layer_opacity);
+                    }
                 }
             }
         }

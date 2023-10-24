@@ -14,6 +14,6 @@ aselib::AsepriteData::AsepriteData(std::string const& file_name)
     for (int frame_index = 0u; frame_index != m_header.m_number_of_frames; ++frame_index) {
         in >> m_frames[frame_index].m_frame_header;
         m_frames[frame_index].m_chunks
-            = parseAllChunks(in, m_frames[frame_index].m_frame_header.m_number_of_chunks);
+            = parseAllChunks(in, m_frames[frame_index].m_frame_header.m_number_of_chunks, m_header);
     }
 }

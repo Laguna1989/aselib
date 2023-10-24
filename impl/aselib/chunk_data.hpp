@@ -8,6 +8,8 @@
 
 namespace aselib {
 
+struct AsepriteHeader;
+
 struct ChunkHeader {
     Dword_t m_chunk_size {};
     Word_t m_chunk_type {};
@@ -58,7 +60,8 @@ struct CelChunk {
     Word_t m_cell_width {};
     Word_t m_cell_height {};
     std::vector<PixelDataRGBA> m_pixels_rgba {};
-    // TODO implement grayscale and indexed cells
+    std::vector<PixelDataGrayscale> m_pixels_grayscale {};
+    // TODO implement indexed cels
 };
 
 struct TagEntry {
@@ -103,8 +106,9 @@ struct ChunksData {
 };
 
 ChunkHeader parseChunkHeader(std::istream& is);
-void parseNextChunk(std::istream& is, ChunksData& data);
-ChunksData parseAllChunks(std::istream& is, std::uint16_t number_of_chunks);
+void parseNextChunk(std::istream& is, ChunksData& data, AsepriteHeader const& ase_header);
+ChunksData parseAllChunks(
+    std::istream& is, uint16_t number_of_chunks, AsepriteHeader const& ase_header);
 
 } // namespace aselib
 
