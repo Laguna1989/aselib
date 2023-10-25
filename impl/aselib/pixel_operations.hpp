@@ -5,8 +5,16 @@
 
 namespace aselib {
 
-aselib::PixelDataRGBA add_pixel_color(aselib::PixelDataRGBA const& pixel_src,
-    aselib::PixelDataRGBA const& pixel_orig, std::uint8_t layer_opacity = 255);
+struct PaletteChunk;
+
+PixelDataRGBA add_pixel_color(PixelDataRGBA const& pixel_src, PixelDataRGBA const& pixel_orig,
+    std::uint8_t layer_opacity = 255);
+
+PixelDataRGBA add_pixel_color(PixelDataGrayscale const& pixel_src, PixelDataRGBA const& pixel_orig,
+    std::uint8_t layer_opacity = 255);
+
+PixelDataRGBA add_pixel_color(PixelDataIndexed const& pixel_src, PixelDataRGBA const& pixel_orig,
+    PaletteChunk const& palette, std::uint8_t layer_opacity = 255);
 
 } // namespace aselib
 

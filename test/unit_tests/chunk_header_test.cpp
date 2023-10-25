@@ -1,6 +1,6 @@
 #include "catch2/catch.hpp"
 #include <aselib/aseprite_header.hpp>
-#include <aselib/chunk_data.hpp>
+#include <aselib/chunks_data.hpp>
 #include <aselib/frame_header.hpp>
 #include <aselib/parse_functions.hpp>
 #include <fstream>

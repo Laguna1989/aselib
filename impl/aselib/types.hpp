@@ -1,5 +1,5 @@
-#ifndef ASEPRITELIB_TYPES_HPP
-#define ASEPRITELIB_TYPES_HPP
+#ifndef ASELIB_TYPES_HPP
+#define ASELIB_TYPES_HPP
 
 #include <cstdint>
 
@@ -12,4 +12,4 @@ using Dword_t = std::uint32_t;
 
 } // namespace aselib
 
-#endif // ASEPRITELIB_TYPES_HPP
+#endif // ASELIB_TYPES_HPP

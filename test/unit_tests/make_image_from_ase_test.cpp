@@ -6,7 +6,7 @@
 
 using namespace aselib;
 
-TEST_CASE("make image from ase with one layer", "[image]")
+TEST_CASE("make image from rgba ase with one layer", "[image, rgba]")
 {
     AsepriteData const ase { "assets/test/unit/dino_salto.aseprite" };
 
@@ -24,7 +24,41 @@ TEST_CASE("make image from ase with one layer", "[image]")
     REQUIRE(img.m_pixels[img.posToIndex(407, 17)] == PixelDataRGBA { 0, 0, 0, 0 });
 }
 
-TEST_CASE("make image from ase with multiple layers", "[image]")
+TEST_CASE("make image from grayscale ase with one layer", "[image, grayscale]")
+{
+    AsepriteData const ase { "assets/test/unit/16_bit_8x1_transition.aseprite" };
+
+    auto const img = makeImageFromAse(ase);
+
+    REQUIRE(img.m_width == 8);
+    REQUIRE(img.m_height == 1);
+
+    REQUIRE(img.m_pixels[img.posToIndex(0, 0)] == PixelDataRGBA { 0, 0, 0, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(1, 0)] == PixelDataRGBA { 0x55, 0x55, 0x55, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(2, 0)] == PixelDataRGBA { 0x73, 0x73, 0x73, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(3, 0)] == PixelDataRGBA { 0x9b, 0x9b, 0x9b, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(4, 0)] == PixelDataRGBA { 0xb4, 0xb4, 0xb4, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(5, 0)] == PixelDataRGBA { 0xcd, 0xcd, 0xcd, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(6, 0)] == PixelDataRGBA { 0xf0, 0xf0, 0xf0, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(7, 0)] == PixelDataRGBA { 0xff, 0xff, 0xff, 255 });
+}
+
+TEST_CASE("make image from indexed ase with one layer", "[image, indexed]")
+{
+    AsepriteData const ase { "assets/test/unit/8_bit_4x1_indexed.aseprite" };
+
+    auto const img = makeImageFromAse(ase);
+
+    REQUIRE(img.m_width == 4);
+    REQUIRE(img.m_height == 1);
+
+    REQUIRE(img.getPixelAt(0, 0) == PixelDataRGBA { 0, 0, 0, 255 });
+    REQUIRE(img.getPixelAt(1, 0) == PixelDataRGBA { 0, 170, 0, 255 });
+    REQUIRE(img.getPixelAt(2, 0) == PixelDataRGBA { 170, 0, 0, 255 });
+    REQUIRE(img.getPixelAt(3, 0) == PixelDataRGBA { 170, 85, 0, 255 });
+}
+
+TEST_CASE("make image from rgba ase with multiple layers", "[image, rgba]")
 {
     AsepriteData ase { "assets/test/unit/miner.aseprite" };
 
@@ -37,7 +71,7 @@ TEST_CASE("make image from ase with multiple layers", "[image]")
     REQUIRE(img.getPixelAt(14, 15) == PixelDataRGBA { 43, 41, 40, 255 });
 }
 
-TEST_CASE("make image from ase with multiple layers and invisible layer", "[image]")
+TEST_CASE("make image from rgba ase with multiple layers and invisible layer", "[image, rgba]")
 {
     AsepriteData ase { "assets/test/unit/miner.aseprite" };
 
@@ -58,7 +92,7 @@ TEST_CASE("make image from ase with multiple layers and invisible layer", "[imag
     REQUIRE(img.m_pixels[img.posToIndex(14, 15)] == PixelDataRGBA { 0, 0, 0, 0 });
 }
 
-TEST_CASE("make image from ase with two layers and opacity", "[image]")
+TEST_CASE("make image from rgba ase with two layers and opacity", "[image, rgba]")
 {
     AsepriteData const ase {
         "assets/test/unit/32_bit_2x2_white_with_transparent_overlay.aseprite"

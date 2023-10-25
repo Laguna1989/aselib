@@ -1,4 +1,5 @@
 #include "pixel_operations.hpp"
+#include <aselib/chunks_data.hpp>
 
 aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataRGBA const& pixel_src,
     aselib::PixelDataRGBA const& pixel_orig, std::uint8_t layer_opacity)
@@ -36,4 +37,26 @@ aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataRGBA const& pixel
         static_cast<std::uint8_t>(a01 * 255.0f)
         // clang-format on
     };
+}
+
+aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataGrayscale const& pixel_src,
+    aselib::PixelDataRGBA const& pixel_orig, std::uint8_t layer_opacity)
+{
+    aselib::PixelDataRGBA const pixel_src_rgba { pixel_src.v, pixel_src.v, pixel_src.v,
+        pixel_src.a };
+
+    return aselib::add_pixel_color(pixel_src_rgba, pixel_orig, layer_opacity);
+}
+
+aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataIndexed const& pixel_src,
+    aselib::PixelDataRGBA const& pixel_orig, aselib::PaletteChunk const& palette,
+    std::uint8_t layer_opacity)
+{
+    auto const index = pixel_src.idx;
+    if (palette.m_palette_entries.size() <= index) {
+        throw std::invalid_argument { "indexed color index exceeds palette size" };
+    }
+    auto const& pixel_src_rgba = palette.m_palette_entries.at(index).m_color;
+
+    return aselib::add_pixel_color(pixel_src_rgba, pixel_orig, layer_opacity);
 }

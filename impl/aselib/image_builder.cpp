@@ -40,14 +40,28 @@ aselib::Image aselib::makeImageFromAse(
                 for (auto y_in_cel = 0; y_in_cel != cel.m_cell_height; ++y_in_cel) {
                     auto const x_in_frame = x_in_cel + cel.m_pos_x;
                     auto const y_in_frame = y_in_cel + cel.m_pos_y;
-
-                    auto const& pixel_src
-                        = cel.m_pixels_rgba[x_in_cel + y_in_cel * cel.m_cell_width];
                     auto const& pixel_orig
                         = img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame);
-
-                    img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
-                        = add_pixel_color(pixel_src, pixel_orig, layer_opacity);
+                    if (ase.m_header.m_color_depth == 32) {
+                        auto const& pixel_src
+                            = cel.m_pixels_rgba[x_in_cel + y_in_cel * cel.m_cell_width];
+                        img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
+                            = add_pixel_color(pixel_src, pixel_orig, layer_opacity);
+                    } else if (ase.m_header.m_color_depth == 16) {
+                        auto const& pixel_src
+                            = cel.m_pixels_grayscale[x_in_cel + y_in_cel * cel.m_cell_width];
+                        img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
+                            = add_pixel_color(pixel_src, pixel_orig, layer_opacity);
+                    } else if (ase.m_header.m_color_depth == 8) {
+                        auto const& palette
+                            = ase.m_frames.front().m_chunks.m_palette_chunks.front();
+                        auto const& pixel_src
+                            = cel.m_pixels_indexed[x_in_cel + y_in_cel * cel.m_cell_width];
+                        img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
+                            = add_pixel_color(pixel_src, pixel_orig, palette, layer_opacity);
+                    } else {
+                        throw std::invalid_argument { "unsupported color depth" };
+                    }
                 }
             }
         }

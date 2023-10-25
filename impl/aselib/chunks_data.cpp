@@ -1,6 +1,7 @@
-#include "chunk_data.hpp"
-#include "pixel_data.hpp"
+#include "chunks_data.hpp"
+#include <aselib/aseprite_header.hpp>
 #include <aselib/parse_functions.hpp>
+#include <aselib/pixel_data.hpp>
 #include <cstring>
 #include <sstream>
 #include <zlib.h>
@@ -56,7 +57,8 @@ aselib::ChunkHeader aselib::parseChunkHeader(std::istream& is)
     return hdr;
 }
 
-void aselib::parseNextChunk(std::istream& is, ChunksData& data)
+void aselib::parseNextChunk(
+    std::istream& is, ChunksData& data, aselib::AsepriteHeader const& ase_header)
 {
     ChunkHeader const hdr = parseChunkHeader(is);
 
@@ -85,10 +87,10 @@ void aselib::parseNextChunk(std::istream& is, ChunksData& data)
         for (auto i = 0u; i != palette_size; ++i) {
             PaletteEntry entry {};
             entry.m_entry_flags = parseWord(is);
-            entry.m_red = parseByte(is);
-            entry.m_green = parseByte(is);
-            entry.m_blue = parseByte(is);
-            entry.m_alpha = parseByte(is);
+            entry.m_color.r = parseByte(is);
+            entry.m_color.g = parseByte(is);
+            entry.m_color.b = parseByte(is);
+            entry.m_color.a = parseByte(is);
             pc.m_palette_entries.emplace_back(entry);
         }
         data.m_palette_chunks.emplace_back(pc);
@@ -97,7 +99,7 @@ void aselib::parseNextChunk(std::istream& is, ChunksData& data)
         is.ignore(hdr.m_chunk_size - 6);
     } else if (hdr.m_chunk_type == 0x2004) {
         // layers chunk
-        LayersChunk lc {};
+        LayerChunk lc {};
         lc.m_header = hdr;
         lc.m_layer_flags = parseWord(is);
         lc.m_layer_type = parseWord(is);
@@ -136,22 +138,39 @@ void aselib::parseNextChunk(std::istream& is, ChunksData& data)
         std::string const uncompressed_data = decompress(compressed_data);
 
         auto const length = uncompressed_data.length();
-        if (length != cc.m_cell_height * cc.m_cell_width * 4) {
+        auto const bytes_per_pixel = ase_header.m_color_depth / 8;
+        auto const expected_length = cc.m_cell_height * cc.m_cell_width * bytes_per_pixel;
+        if (length != static_cast<std::size_t>(expected_length)) {
             throw std::invalid_argument {
-                "decompressed cel data length does not match cel width and height."
+                "decompressed cel data length does not match cel width and height and bit depth"
             };
         }
         for (auto j = 0u; j != cc.m_cell_height; ++j) {
             for (auto i = 0u; i != cc.m_cell_width; ++i) {
-                auto const idx_ofs = (i + j * cc.m_cell_width) * 4;
-                cc.m_pixels_rgba.emplace_back(PixelDataRGBA {
-                    // clang-format off
+                auto const idx_ofs = (i + j * cc.m_cell_width) * bytes_per_pixel;
+                if (bytes_per_pixel == 4) {
+                    cc.m_pixels_rgba.emplace_back(PixelDataRGBA {
+                        // clang-format off
                         static_cast<Byte_t>(uncompressed_data[idx_ofs + 0]),
                         static_cast<Byte_t>(uncompressed_data[idx_ofs + 1]),
                         static_cast<Byte_t>(uncompressed_data[idx_ofs + 2]),
                         static_cast<Byte_t>(uncompressed_data[idx_ofs + 3])
-                    // clang-format on
-                });
+                        // clang-format on
+                    });
+                } else if (bytes_per_pixel == 2) {
+                    cc.m_pixels_grayscale.emplace_back(PixelDataGrayscale {
+                        // clang-format off
+                        static_cast<Byte_t>(uncompressed_data[idx_ofs + 0]),
+                        static_cast<Byte_t>(uncompressed_data[idx_ofs + 1])
+                        // clang-format on
+                    });
+                } else if (bytes_per_pixel == 1) {
+                    cc.m_pixels_indexed.emplace_back(
+                        PixelDataIndexed { static_cast<Byte_t>(uncompressed_data[idx_ofs]) });
+                } else {
+                    throw std::invalid_argument { "unsupported color depth: "
+                        + std::to_string(static_cast<int>(ase_header.m_color_depth)) };
+                }
             }
         }
 
@@ -202,11 +221,12 @@ void aselib::parseNextChunk(std::istream& is, ChunksData& data)
     }
 }
 
-aselib::ChunksData aselib::parseAllChunks(std::istream& is, std::uint16_t number_of_chunks)
+aselib::ChunksData aselib::parseAllChunks(
+    std::istream& is, uint16_t number_of_chunks, aselib::AsepriteHeader const& ase_header)
 {
     ChunksData chunks {};
     for (std::uint16_t i = 0u; i != number_of_chunks; ++i) {
-        parseNextChunk(is, chunks);
+        parseNextChunk(is, chunks, ase_header);
     }
 
     return chunks;
