@@ -1,5 +1,5 @@
-#ifndef ASEPRITELIB_PIXEL_DATA_HPP
-#define ASEPRITELIB_PIXEL_DATA_HPP
+#ifndef ASELIB_PIXEL_DATA_HPP
+#define ASELIB_PIXEL_DATA_HPP
 
 #include <aselib/types.hpp>
 #include <vector>
@@ -24,6 +24,10 @@ struct PixelDataGrayscale {
 bool operator==(PixelDataGrayscale const& lhs, PixelDataGrayscale const& rhs);
 bool operator!=(PixelDataGrayscale const& lhs, PixelDataGrayscale const& rhs);
 
+struct PixelDataIndexed {
+    std::uint8_t idx {};
+};
+
 } // namespace aselib
 
-#endif // ASEPRITELIB_PIXEL_DATA_HPP
+#endif // ASELIB_PIXEL_DATA_HPP

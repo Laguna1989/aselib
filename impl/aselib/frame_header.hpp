@@ -1,5 +1,5 @@
-#ifndef ASEPRITELIB_FRAME_HEADER_HPP
-#define ASEPRITELIB_FRAME_HEADER_HPP
+#ifndef ASELIB_FRAME_HEADER_HPP
+#define ASELIB_FRAME_HEADER_HPP
 
 #include <aselib/types.hpp>
 #include <istream>
@@ -17,4 +17,4 @@ std::istream& operator>>(std::istream& is, FrameHeader& header);
 
 } // namespace aselib
 
-#endif // ASEPRITELIB_FRAME_HEADER_HPP
+#endif // ASELIB_FRAME_HEADER_HPP

@@ -1,8 +1,9 @@
-#ifndef ASEPRITELIB_FRAME_DATA_HPP
-#define ASEPRITELIB_FRAME_DATA_HPP
+#ifndef ASELIB_FRAME_DATA_HPP
+#define ASELIB_FRAME_DATA_HPP
 
-#include <aselib/chunk_data.hpp>
+#include <aselib/chunks_data.hpp>
 #include <aselib/frame_header.hpp>
+
 namespace aselib {
 
 struct FrameData {
@@ -12,4 +13,4 @@ struct FrameData {
 
 } // namespace aselib
 
-#endif // ASEPRITELIB_FRAME_DATA_HPP
+#endif // ASELIB_FRAME_DATA_HPP

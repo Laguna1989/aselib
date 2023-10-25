@@ -1,5 +1,5 @@
-#ifndef OPENALPP_SOUND_DATA_INCLUDE_HPP
-#define OPENALPP_SOUND_DATA_INCLUDE_HPP
+#ifndef ASELIB_ASEPRITEHEADER_GUARD
+#define ASELIB_ASEPRITEHEADER_GUARD
 
 #include <aselib/types.hpp>
 #include <istream>
@@ -32,4 +32,4 @@ std::istream& operator>>(std::istream& os, AsepriteHeader& header);
 
 } // namespace aselib
 
-#endif // OPENALPP_SOUND_DATA_INCLUDE_HPP
+#endif // ASELIB_ASEPRITEHEADER_GUARD

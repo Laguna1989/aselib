@@ -52,6 +52,15 @@ aselib::Image aselib::makeImageFromAse(
                             = cel.m_pixels_grayscale[x_in_cel + y_in_cel * cel.m_cell_width];
                         img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
                             = add_pixel_color(pixel_src, pixel_orig, layer_opacity);
+                    } else if (ase.m_header.m_color_depth == 8) {
+                        auto const& palette
+                            = ase.m_frames.front().m_chunks.m_palette_chunks.front();
+                        auto const& pixel_src
+                            = cel.m_pixels_indexed[x_in_cel + y_in_cel * cel.m_cell_width];
+                        img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
+                            = add_pixel_color(pixel_src, pixel_orig, palette, layer_opacity);
+                    } else {
+                        throw std::invalid_argument { "unsupported color depth" };
                     }
                 }
             }

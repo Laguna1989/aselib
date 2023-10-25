@@ -1,4 +1,4 @@
-#include "chunk_data.hpp"
+#include "chunks_data.hpp"
 #include <aselib/aseprite_header.hpp>
 #include <aselib/parse_functions.hpp>
 #include <aselib/pixel_data.hpp>
@@ -87,10 +87,10 @@ void aselib::parseNextChunk(
         for (auto i = 0u; i != palette_size; ++i) {
             PaletteEntry entry {};
             entry.m_entry_flags = parseWord(is);
-            entry.m_red = parseByte(is);
-            entry.m_green = parseByte(is);
-            entry.m_blue = parseByte(is);
-            entry.m_alpha = parseByte(is);
+            entry.m_color.r = parseByte(is);
+            entry.m_color.g = parseByte(is);
+            entry.m_color.b = parseByte(is);
+            entry.m_color.a = parseByte(is);
             pc.m_palette_entries.emplace_back(entry);
         }
         data.m_palette_chunks.emplace_back(pc);
@@ -99,7 +99,7 @@ void aselib::parseNextChunk(
         is.ignore(hdr.m_chunk_size - 6);
     } else if (hdr.m_chunk_type == 0x2004) {
         // layers chunk
-        LayersChunk lc {};
+        LayerChunk lc {};
         lc.m_header = hdr;
         lc.m_layer_flags = parseWord(is);
         lc.m_layer_type = parseWord(is);
@@ -164,6 +164,12 @@ void aselib::parseNextChunk(
                         static_cast<Byte_t>(uncompressed_data[idx_ofs + 1])
                         // clang-format on
                     });
+                } else if (bytes_per_pixel == 1) {
+                    cc.m_pixels_indexed.emplace_back(
+                        PixelDataIndexed { static_cast<Byte_t>(uncompressed_data[idx_ofs]) });
+                } else {
+                    throw std::invalid_argument { "unsupported color depth: "
+                        + std::to_string(static_cast<int>(ase_header.m_color_depth)) };
                 }
             }
         }

@@ -1,5 +1,5 @@
-#ifndef ASEPRITELIB_PARSE_FUNCTIONS_HPP
-#define ASEPRITELIB_PARSE_FUNCTIONS_HPP
+#ifndef ASELIB_PARSE_FUNCTIONS_HPP
+#define ASELIB_PARSE_FUNCTIONS_HPP
 
 #include <cstdint>
 #include <istream>
@@ -18,4 +18,4 @@ std::string parseString(std::istream& is);
 
 } // namespace aselib
 
-#endif // ASEPRITELIB_PARSE_FUNCTIONS_HPP
+#endif // ASELIB_PARSE_FUNCTIONS_HPP

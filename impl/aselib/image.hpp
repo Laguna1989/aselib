@@ -1,5 +1,5 @@
-#ifndef ASEPRITELIB_IMAGE_HPP
-#define ASEPRITELIB_IMAGE_HPP
+#ifndef ASELIB_IMAGE_HPP
+#define ASELIB_IMAGE_HPP
 
 #include <aselib/pixel_data.hpp>
 #include <cstdint>
@@ -21,4 +21,4 @@ struct Image {
 
 } // namespace aselib
 
-#endif // ASEPRITELIB_IMAGE_HPP
+#endif // ASELIB_IMAGE_HPP

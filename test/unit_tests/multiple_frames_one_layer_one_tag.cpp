@@ -30,24 +30,24 @@ TEST_CASE("multiple frames one layer one tag", "[dino, frame, layer, tag]")
             REQUIRE(first_frame.m_chunks.m_palette_chunks.front().m_palette_entries.size() == 22);
             auto const& first_color
                 = first_frame.m_chunks.m_palette_chunks.front().m_palette_entries.front();
-            REQUIRE(first_color.m_red == 0);
-            REQUIRE(first_color.m_green == 0);
-            REQUIRE(first_color.m_blue == 0);
-            REQUIRE(first_color.m_alpha == 255);
+            REQUIRE(first_color.m_color.r == 0);
+            REQUIRE(first_color.m_color.g == 0);
+            REQUIRE(first_color.m_color.b == 0);
+            REQUIRE(first_color.m_color.a == 255);
 
             auto const& middle_color
                 = first_frame.m_chunks.m_palette_chunks.front().m_palette_entries.at(6);
-            REQUIRE(middle_color.m_red == 40);
-            REQUIRE(middle_color.m_green == 87);
-            REQUIRE(middle_color.m_blue == 63);
-            REQUIRE(middle_color.m_alpha == 255);
+            REQUIRE(middle_color.m_color.r == 40);
+            REQUIRE(middle_color.m_color.g == 87);
+            REQUIRE(middle_color.m_color.b == 63);
+            REQUIRE(middle_color.m_color.a == 255);
 
             auto const& last_color
                 = first_frame.m_chunks.m_palette_chunks.front().m_palette_entries.back();
-            REQUIRE(last_color.m_red == 0);
-            REQUIRE(last_color.m_green == 0);
-            REQUIRE(last_color.m_blue == 0);
-            REQUIRE(last_color.m_alpha == 255);
+            REQUIRE(last_color.m_color.r == 0);
+            REQUIRE(last_color.m_color.g == 0);
+            REQUIRE(last_color.m_color.b == 0);
+            REQUIRE(last_color.m_color.a == 255);
         }
 
         SECTION("layers")

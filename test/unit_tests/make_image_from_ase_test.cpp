@@ -43,6 +43,21 @@ TEST_CASE("make image from grayscale ase with one layer", "[image, grayscale]")
     REQUIRE(img.m_pixels[img.posToIndex(7, 0)] == PixelDataRGBA { 0xff, 0xff, 0xff, 255 });
 }
 
+TEST_CASE("make image from indexed ase with one layer", "[image, indexed]")
+{
+    AsepriteData const ase { "assets/test/unit/8_bit_4x1_indexed.aseprite" };
+
+    auto const img = makeImageFromAse(ase);
+
+    REQUIRE(img.m_width == 4);
+    REQUIRE(img.m_height == 1);
+
+    REQUIRE(img.getPixelAt(0, 0) == PixelDataRGBA { 0, 0, 0, 255 });
+    REQUIRE(img.getPixelAt(1, 0) == PixelDataRGBA { 0, 170, 0, 255 });
+    REQUIRE(img.getPixelAt(2, 0) == PixelDataRGBA { 170, 0, 0, 255 });
+    REQUIRE(img.getPixelAt(3, 0) == PixelDataRGBA { 170, 85, 0, 255 });
+}
+
 TEST_CASE("make image from rgba ase with multiple layers", "[image, rgba]")
 {
     AsepriteData ase { "assets/test/unit/miner.aseprite" };

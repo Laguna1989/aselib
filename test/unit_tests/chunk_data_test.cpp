@@ -22,15 +22,15 @@ TEST_CASE("chunk data for rgba file", "[chunk]")
         REQUIRE(chunks.m_palette_chunks.size() == 1);
         REQUIRE(chunks.m_palette_chunks.front().m_header.m_chunk_type == 0x2019);
         REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.size() == 2);
-        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.front().m_red == 0);
-        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.front().m_green == 0);
-        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.front().m_blue == 0);
-        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.front().m_alpha == 255);
+        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.front().m_color.r == 0);
+        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.front().m_color.g == 0);
+        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.front().m_color.b == 0);
+        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.front().m_color.a == 255);
 
-        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.back().m_red == 34);
-        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.back().m_green == 32);
-        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.back().m_blue == 52);
-        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.back().m_alpha == 255);
+        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.back().m_color.r == 34);
+        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.back().m_color.g == 32);
+        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.back().m_color.b == 52);
+        REQUIRE(chunks.m_palette_chunks.front().m_palette_entries.back().m_color.a == 255);
     }
     SECTION("layers")
     {
@@ -54,6 +54,10 @@ TEST_CASE("chunk data for rgba file", "[chunk]")
         REQUIRE(chunks.m_cel_chunks.front().m_z_index == 0);
         REQUIRE(chunks.m_cel_chunks.front().m_cell_width == 1);
         REQUIRE(chunks.m_cel_chunks.front().m_cell_height == 1);
+
+        REQUIRE(chunks.m_cel_chunks.front().m_pixels_indexed.empty());
+        REQUIRE(chunks.m_cel_chunks.front().m_pixels_grayscale.empty());
+
         REQUIRE(chunks.m_cel_chunks.front().m_pixels_rgba.size() == 1);
         REQUIRE(chunks.m_cel_chunks.front().m_pixels_rgba.front().r == 255);
         REQUIRE(chunks.m_cel_chunks.front().m_pixels_rgba.front().g == 255);
@@ -110,5 +114,20 @@ TEST_CASE("Cel Chunk for Grayscale", "[chunk, tag]")
     REQUIRE(!ase.m_frames.front().m_chunks.m_cel_chunks.empty());
     auto const& cel = ase.m_frames.front().m_chunks.m_cel_chunks.front();
     REQUIRE(cel.m_pixels_rgba.empty());
+    REQUIRE(cel.m_pixels_indexed.empty());
     REQUIRE(cel.m_pixels_grayscale.size() == 8);
+}
+
+TEST_CASE("Cel Chunk for Indexed", "[chunk, tag]")
+{
+    AsepriteData const ase { "assets/test/unit/8_bit_4x1_indexed.aseprite" };
+
+    REQUIRE(ase.m_header.m_color_depth == 8);
+
+    REQUIRE(!ase.m_frames.front().m_chunks.m_cel_chunks.empty());
+    auto const& cel = ase.m_frames.front().m_chunks.m_cel_chunks.front();
+    REQUIRE(cel.m_pixels_rgba.empty());
+    REQUIRE(cel.m_pixels_rgba.empty());
+    REQUIRE(cel.m_pixels_grayscale.empty());
+    REQUIRE(cel.m_pixels_indexed.size() == 4);
 }
