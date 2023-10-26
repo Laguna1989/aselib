@@ -7,17 +7,16 @@ support [this awesome pixelart program](https://www.aseprite.org/)!
 
 # Limitations
 
-* No support for grayscale or indexed image types. Only RGBA files are supported.
-    * Grayscale and indexed files will not parse.
 * Only "Normal" Blend Mode is supported.
     * Blend mode is effectively ignored.
 * No support of user data properties.
-    * Files with user data properties will not prase.
+    * Files with user data properties will not parse.
+* No support for writing `*.aseprite` files. This library is for parsing only.
 
 # Dependencies
 
-* zlib (for cel chunk decompression)
-* catch2 (for testing only)
+* `zlib` 1.2.13 for cel chunk (image data) decompression
+* `catch2` v2.13.8 for unit tests
 
 All dependencies are obtained via cmake.
 
@@ -25,7 +24,7 @@ All dependencies are obtained via cmake.
 
 ## CMake
 
-CMake integration into your own project is done via `FetchContent`.
+CMake integration into your own project can be done via `FetchContent` or [CPM](https://github.com/cpm-cmake/CPM.cmake).
 
 include in your `CMakeLists.txt`
 
@@ -54,6 +53,9 @@ target_link_libraries(MyTarget aselib)
 aselib::AsepriteData aseData { filename };
 
 // get image date from all layers
+//
+// note: if you want to get pixel data from only one layer,
+// you can use aselib::makeImageFromLayer(aseData, layerName).
 auto const aseImage = aselib::makeImageFromAse(aseData);
 
 // create empty sf::Image with correct size
@@ -115,12 +117,15 @@ where `r`, `g`, `b`, `a` are `std::uint8_t` values, as obtained by `aselib`.
 
 All you need is the option to set pixel data in the framework of your choice.
 The snippets above showcase how to obtain image data from `aselib`, but you can also directly access the members
-of `aselib::AsepriteData` and obtain the information that you require.
+of `aselib::AsepriteData` and obtain the information that you require. The types are designed as POD types that can be
+read directly.
 
 [This page](https://github.com/aseprite/aseprite/blob/main/docs/ase-file-specs.md) from the aseprite documentation
 provides a great starting point for understanding what information is available besides the pixel information.
 
-## Build and run tests locally (on linux)
+## Build and run tests locally
+
+The following commands are for linux, but similar commands also work on windows.
 
 ```shell
 git clone https://github.com/Laguna1989/aselib.git
