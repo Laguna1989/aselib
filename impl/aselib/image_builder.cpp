@@ -5,7 +5,7 @@
 aselib::Image aselib::makeImageFromAse(
     aselib::AsepriteData const& ase, bool include_invisible_layers)
 {
-    if (ase.m_frames.empty()) {
+    if (ase.m_frames.empty()) [[unlikely]] {
         throw std::invalid_argument { "aseprite does not contain any frames" };
     }
 
@@ -59,7 +59,7 @@ aselib::Image aselib::makeImageFromAse(
                             = cel.m_pixels_indexed[x_in_cel + y_in_cel * cel.m_cell_width];
                         img.getPixelAt(x_in_frame + frame_offset_x, y_in_frame)
                             = add_pixel_color(pixel_src, pixel_orig, palette, layer_opacity);
-                    } else {
+                    } else [[unlikely]] {
                         throw std::invalid_argument { "unsupported color depth" };
                     }
                 }
@@ -84,7 +84,7 @@ aselib::Image aselib::makeImageFromLayer(
             break;
         }
     }
-    if (!found) {
+    if (!found) [[unlikely]] {
         throw std::invalid_argument { "no layer found with name '" + layerName + "'" };
     }
 
@@ -98,10 +98,10 @@ aselib::Image aselib::makeImageFromLayer(
 
     for (auto i = 0u; i != numberOfFrames; ++i) {
 
-        std::uint32_t frame_offset_x = i * ase.m_header.m_width_in_pixel;
-        auto const& f = ase.m_frames[i];
+        std::uint32_t const frame_offset_x = i * ase.m_header.m_width_in_pixel;
+        auto const& [frame_header, m_chunks] = ase.m_frames[i];
 
-        for (auto const& cel : f.m_chunks.m_cel_chunks) {
+        for (auto const& cel : m_chunks.m_cel_chunks) {
             if (cel.m_layer_index != layerID) {
                 continue;
             }

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gccver: [ 9, 10, 11 ]
+        gccver: [ 10, 11, 12, 13 ]
     steps:
       - name: Set up cmake
         uses: jwlawson/actions-setup-cmake@v1.11
@@ -24,7 +24,7 @@ jobs:
           version: ${{ matrix.gccver }}
           platform: x64
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1
@@ -57,7 +57,7 @@ jobs:
   #        with:
   #          cmake-version: '3.26.x'
   #
-  #      - uses: actions/checkout@v2
+  #      - uses: actions/checkout@v4
   #
   #      - name: CMake
   #        run: cmake -B ${{github.workspace}}/build . -DOALPP_STATIC_LIBRARY=ON
@@ -83,12 +83,14 @@ jobs:
       - name: Set up gcc
         uses: egor-tensin/setup-gcc@v1
         with:
-          version: 9
+          version: 11
           platform: x64
 
-      - uses: mymindstorm/setup-emsdk@v11
+      - uses: mymindstorm/setup-emsdk@v13
+        with:
+          version: 3.1.51
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1
@@ -117,7 +119,7 @@ jobs:
         run: |
           brew install cmake ninja
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1

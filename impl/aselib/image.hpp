@@ -13,7 +13,7 @@ struct Image {
 
     std::vector<PixelDataRGBA> m_pixels {};
 
-    PixelDataRGBA& getPixelAt(std::uint32_t x, std::uint32_t y);
+    [[nodiscard]] PixelDataRGBA& getPixelAt(std::uint32_t x, std::uint32_t y);
     [[nodiscard]] PixelDataRGBA const& getPixelAt(std::uint32_t x, std::uint32_t y) const;
 
     [[nodiscard]] std::size_t posToIndex(std::uint32_t x, std::uint32_t y) const;

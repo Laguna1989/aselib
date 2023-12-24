@@ -26,7 +26,9 @@ struct ChunksData {
 };
 
 ChunkHeader parseChunkHeader(std::istream& is);
+
 void parseNextChunk(std::istream& is, ChunksData& data, AsepriteHeader const& ase_header);
+
 ChunksData parseAllChunks(
     std::istream& is, uint16_t number_of_chunks, AsepriteHeader const& ase_header);
 

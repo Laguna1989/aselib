@@ -60,7 +60,7 @@ TEST_CASE("make image from indexed ase with one layer", "[image, indexed]")
 
 TEST_CASE("make image from rgba ase with multiple layers", "[image, rgba]")
 {
-    AsepriteData ase { "assets/test/unit/miner.aseprite" };
+    AsepriteData const ase { "assets/test/unit/miner.aseprite" };
 
     auto const img = makeImageFromAse(ase);
 
@@ -73,15 +73,7 @@ TEST_CASE("make image from rgba ase with multiple layers", "[image, rgba]")
 
 TEST_CASE("make image from rgba ase with multiple layers and invisible layer", "[image, rgba]")
 {
-    AsepriteData ase { "assets/test/unit/miner.aseprite" };
-
-    for (auto& layer : ase.m_frames[0].m_chunks.m_layers_chunks) {
-        if (layer.m_layer_name == "outline") {
-            layer.m_layer_flags
-                = aselib::layer_flags::editable | aselib::layer_flags::lock_movement;
-            break;
-        }
-    }
+    AsepriteData const ase { "assets/test/unit/miner_transparent_outline.aseprite" };
 
     auto const img = makeImageFromAse(ase, false);
 
@@ -107,4 +99,21 @@ TEST_CASE("make image from rgba ase with two layers and opacity", "[image, rgba]
     REQUIRE(img.getPixelAt(1, 0) == PixelDataRGBA { 155, 255, 155, 255 });
     REQUIRE(img.getPixelAt(0, 1) == PixelDataRGBA { 255, 255, 255, 255 });
     REQUIRE(img.getPixelAt(1, 1) == PixelDataRGBA { 155, 155, 255, 255 });
+}
+
+TEST_CASE("make image from ase exception test", "[image, exception]")
+{
+    AsepriteData ase { "assets/test/unit/32_bit_2x2_white_with_transparent_overlay.aseprite" };
+
+    SECTION("no frames")
+    {
+        ase.m_frames.clear();
+        REQUIRE_THROWS(makeImageFromAse(ase));
+    }
+
+    SECTION("invalid color depth")
+    {
+        ase.m_header.m_color_depth = 7;
+        REQUIRE_THROWS(makeImageFromAse(ase));
+    }
 }

@@ -2,7 +2,7 @@
 
 # About
 
-This is a c++17 library to parse `*.aseprite` files. Please check out and
+This is a c++20 library to parse `*.aseprite` files. Please check out and
 support [this awesome pixelart program](https://www.aseprite.org/)!
 
 # Limitations

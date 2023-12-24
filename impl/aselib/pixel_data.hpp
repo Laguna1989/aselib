@@ -2,7 +2,6 @@
 #define ASELIB_PIXEL_DATA_HPP
 
 #include <aselib/types.hpp>
-#include <vector>
 
 namespace aselib {
 
@@ -11,21 +10,24 @@ struct PixelDataRGBA {
     Byte_t g { 0u };
     Byte_t b { 0u };
     Byte_t a { 0u };
-};
 
-bool operator==(PixelDataRGBA const& lhs, PixelDataRGBA const& rhs);
-bool operator!=(PixelDataRGBA const& lhs, PixelDataRGBA const& rhs);
+    constexpr bool operator==(PixelDataRGBA const& other) const = default;
+    constexpr bool operator!=(PixelDataRGBA const& other) const = default;
+};
 
 struct PixelDataGrayscale {
     Byte_t v { 0u };
     Byte_t a { 0u };
-};
 
-bool operator==(PixelDataGrayscale const& lhs, PixelDataGrayscale const& rhs);
-bool operator!=(PixelDataGrayscale const& lhs, PixelDataGrayscale const& rhs);
+    constexpr bool operator==(PixelDataGrayscale const& other) const = default;
+    constexpr bool operator!=(PixelDataGrayscale const& other) const = default;
+};
 
 struct PixelDataIndexed {
     std::uint8_t idx {};
+
+    constexpr bool operator==(PixelDataIndexed const& other) const = default;
+    constexpr bool operator!=(PixelDataIndexed const& other) const = default;
 };
 
 } // namespace aselib

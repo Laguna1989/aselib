@@ -6,9 +6,9 @@
 
 namespace aselib {
 
-Image makeImageFromAse(AsepriteData const& ase, bool include_invisible_layers = true);
+[[nodiscard]] Image makeImageFromAse(AsepriteData const& ase, bool include_invisible_layers = true);
 
-Image makeImageFromLayer(AsepriteData const& ase, std::string const& layerName);
+[[nodiscard]] Image makeImageFromLayer(AsepriteData const& ase, std::string const& layerName);
 
 } // namespace aselib
 

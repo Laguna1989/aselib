@@ -4,7 +4,7 @@ std::uint8_t aselib::parseByte(std::istream& is)
 {
     char b1;
     is.get(b1);
-    if (!is.good()) {
+    if (!is.good()) [[unlikely]] {
         return 0u;
     }
     return static_cast<std::uint8_t>(b1);
@@ -17,7 +17,7 @@ std::uint16_t aselib::parseWord(std::istream& is)
     is.get(b[0]);
     is.get(b[1]);
 
-    if (!is.good()) {
+    if (!is.good()) [[unlikely]] {
         return 0u;
     }
 
@@ -37,7 +37,7 @@ std::int16_t aselib::parseShort(std::istream& is)
     is.get(b[0]);
     is.get(b[1]);
 
-    if (!is.good()) {
+    if (!is.good()) [[unlikely]] {
         return 0u;
     }
 
@@ -56,7 +56,7 @@ std::uint32_t aselib::parseDword(std::istream& is)
     is.get(b[1]);
     is.get(b[2]);
     is.get(b[3]);
-    if (!is.good()) {
+    if (!is.good()) [[unlikely]] {
         return 0;
     }
     return (
@@ -76,6 +76,9 @@ std::string aselib::parseString(std::istream& is)
     str.resize(size);
     for (auto i = 0u; i != size; ++i) {
         str[i] = parseByte(is);
+    }
+    if (!is.good()) [[unlikely]] {
+        return "";
     }
     return str;
 }
