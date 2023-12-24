@@ -49,26 +49,26 @@ jobs:
         run: ./aselib_test
         working-directory: ${{github.workspace}}/build/test/unit_tests
 
-  #  Windows:
-  #    runs-on: windows-2019
-  #    steps:
-  #      - name: Set up cmake
-  #        uses: jwlawson/actions-setup-cmake@v1.11
-  #        with:
-  #          cmake-version: '3.26.x'
-  #
-  #      - uses: actions/checkout@v4
-  #
-  #      - name: CMake
-  #        run: cmake -B ${{github.workspace}}/build . -DOALPP_STATIC_LIBRARY=ON
-  #
-  #      - name: Build
-  #        working-directory: ${{github.workspace}}/build
-  #        run: cmake --build .
-  #
-  #      - name: Test
-  #        working-directory: ${{github.workspace}}/build
-  #        run: test/unit_tests/Debug/OpenALpp_UnitTests.exe --order rand
+  Windows:
+    runs-on: windows-2019
+    steps:
+      - name: Set up cmake
+        uses: jwlawson/actions-setup-cmake@v1.11
+        with:
+          cmake-version: '3.26.x'
+
+      - uses: actions/checkout@v4
+
+      - name: CMake
+        run: cmake -B ${{github.workspace}}/build .
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . --parallel
+
+      - name: Test
+        working-directory: ${{github.workspace}}
+        run: build/test/unit_tests/Debug/aselib_test.exe --order rand
 
   Web:
     runs-on: ubuntu-latest
