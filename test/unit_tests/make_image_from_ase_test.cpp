@@ -60,7 +60,7 @@ TEST_CASE("make image from indexed ase with one layer", "[image, indexed]")
 
 TEST_CASE("make image from rgba ase with multiple layers", "[image, rgba]")
 {
-    AsepriteData ase { "assets/test/unit/miner.aseprite" };
+    AsepriteData const ase { "assets/test/unit/miner.aseprite" };
 
     auto const img = makeImageFromAse(ase);
 
@@ -73,15 +73,7 @@ TEST_CASE("make image from rgba ase with multiple layers", "[image, rgba]")
 
 TEST_CASE("make image from rgba ase with multiple layers and invisible layer", "[image, rgba]")
 {
-    AsepriteData ase { "assets/test/unit/miner.aseprite" };
-
-    for (auto& layer : ase.m_frames[0].m_chunks.m_layers_chunks) {
-        if (layer.m_layer_name == "outline") {
-            layer.m_layer_flags
-                = aselib::layer_flags::editable | aselib::layer_flags::lock_movement;
-            break;
-        }
-    }
+    AsepriteData const ase { "assets/test/unit/miner_transparent_outline.aseprite" };
 
     auto const img = makeImageFromAse(ase, false);
 

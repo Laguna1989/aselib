@@ -9,7 +9,7 @@ namespace aselib {
 
 class AsepriteData {
 public:
-    AsepriteData(std::string const& file_name);
+    explicit AsepriteData(std::string const& file_name);
 
     AsepriteHeader m_header {};
     std::vector<FrameData> m_frames {};

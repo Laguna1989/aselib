@@ -4,8 +4,8 @@ project(aselib VERSION 0.0.1 LANGUAGES CXX)
 option(ASE_LIB_ENABLE_UNIT_TESTS "Enable unit tests" ON)
 
 set(CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 17)
-set(CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CXX_STANDARD 20)
 
 # speed up fetchcontent on consecutive runs
 set(FETCHCONTENT_UPDATES_DISCONNECTED ON)

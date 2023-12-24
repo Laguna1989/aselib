@@ -18,7 +18,8 @@ struct CelChunk {
     Short_t m_z_index {};
     Word_t m_cell_width {};
     Word_t m_cell_height {};
-    // Note: the cel chunk contains all three pixel data types, but only one is used.
+    // Note: the cel chunk contains all three pixel data types, but only one is used, based on
+    // m_cell_type.
     std::vector<PixelDataRGBA> m_pixels_rgba {};
     std::vector<PixelDataGrayscale> m_pixels_grayscale {};
     std::vector<PixelDataIndexed> m_pixels_indexed;
