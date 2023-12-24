@@ -28,7 +28,7 @@ struct AsepriteHeader {
     Word_t m_grid_height {};
 };
 
-std::istream& operator>>(std::istream& os, AsepriteHeader& header);
+std::istream& operator>>(std::istream& is, AsepriteHeader& header);
 
 } // namespace aselib
 

@@ -7,7 +7,8 @@ aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataRGBA const& pixel
     if (pixel_src.a == 255) {
         // just paint over
         return pixel_src;
-    } else if (pixel_src.a == 0) {
+    }
+    if (pixel_src.a == 0) {
         // ignore new pixel
         return pixel_orig;
     }
@@ -45,7 +46,7 @@ aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataGrayscale const& 
     aselib::PixelDataRGBA const pixel_src_rgba { pixel_src.v, pixel_src.v, pixel_src.v,
         pixel_src.a };
 
-    return aselib::add_pixel_color(pixel_src_rgba, pixel_orig, layer_opacity);
+    return add_pixel_color(pixel_src_rgba, pixel_orig, layer_opacity);
 }
 
 aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataIndexed const& pixel_src,
@@ -53,7 +54,7 @@ aselib::PixelDataRGBA aselib::add_pixel_color(aselib::PixelDataIndexed const& pi
     std::uint8_t layer_opacity)
 {
     auto const index = pixel_src.idx;
-    if (palette.m_palette_entries.size() <= index) {
+    if (palette.m_palette_entries.size() <= index) [[unlikely]] {
         throw std::invalid_argument { "indexed color index exceeds palette size" };
     }
     auto const& pixel_src_rgba = palette.m_palette_entries.at(index).m_color;

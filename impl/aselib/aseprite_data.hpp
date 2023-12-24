@@ -3,13 +3,14 @@
 
 #include <aselib/aseprite_header.hpp>
 #include <aselib/frame_data.hpp>
+#include <filesystem>
 #include <vector>
 
 namespace aselib {
 
 class AsepriteData {
 public:
-    explicit AsepriteData(std::string const& file_name);
+    explicit AsepriteData(std::filesystem::path const& file_name);
 
     AsepriteHeader m_header {};
     std::vector<FrameData> m_frames {};

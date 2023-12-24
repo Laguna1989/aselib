@@ -2,11 +2,11 @@
 #include <fstream>
 #include <istream>
 
-aselib::AsepriteData::AsepriteData(std::string const& file_name)
+aselib::AsepriteData::AsepriteData(std::filesystem::path const& file_name)
 {
     std::ifstream in { file_name, std::ios::binary };
-    if (!in.good()) {
-        throw std::invalid_argument { "Error opening the file: '" + file_name + "'" };
+    if (!in.good()) [[unlikely]] {
+        throw std::invalid_argument { "Error opening the file: '" + file_name.string() + "'" };
     }
     in >> m_header;
 
