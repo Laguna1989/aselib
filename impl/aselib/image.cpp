@@ -1,6 +1,6 @@
 #include "image.hpp"
-
 #include <stdexcept>
+#include <string>
 
 std::size_t aselib::Image::posToIndex(std::uint32_t x, std::uint32_t y) const
 {
