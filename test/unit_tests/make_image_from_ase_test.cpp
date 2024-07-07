@@ -24,7 +24,7 @@ TEST_CASE("make image from rgba ase with one layer", "[image, rgba]")
     REQUIRE(img.m_pixels[img.posToIndex(407, 17)] == PixelDataRGBA { 0, 0, 0, 0 });
 }
 
-TEST_CASE("make image from grayscale ase with one layer", "[image, grayscale]")
+TEST_CASE("make image from horizontal grayscale ase with one layer", "[image, grayscale]")
 {
     AsepriteData const ase { "assets/test/unit/16_bit_8x1_transition.aseprite" };
 
@@ -41,6 +41,25 @@ TEST_CASE("make image from grayscale ase with one layer", "[image, grayscale]")
     REQUIRE(img.m_pixels[img.posToIndex(5, 0)] == PixelDataRGBA { 0xcd, 0xcd, 0xcd, 255 });
     REQUIRE(img.m_pixels[img.posToIndex(6, 0)] == PixelDataRGBA { 0xf0, 0xf0, 0xf0, 255 });
     REQUIRE(img.m_pixels[img.posToIndex(7, 0)] == PixelDataRGBA { 0xff, 0xff, 0xff, 255 });
+}
+
+TEST_CASE("make image from vertical grayscale ase with one layer", "[image, grayscale]")
+{
+    AsepriteData const ase { "assets/test/unit/16_bit_1x8_transition.aseprite" };
+
+    auto const img = makeImageFromAse(ase);
+
+    REQUIRE(img.m_width == 1);
+    REQUIRE(img.m_height == 8);
+
+    REQUIRE(img.m_pixels[img.posToIndex(0, 0)] == PixelDataRGBA { 0, 0, 0, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(0, 1)] == PixelDataRGBA { 0x55, 0x55, 0x55, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(0, 2)] == PixelDataRGBA { 0x73, 0x73, 0x73, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(0, 3)] == PixelDataRGBA { 0x9b, 0x9b, 0x9b, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(0, 4)] == PixelDataRGBA { 0xb4, 0xb4, 0xb4, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(0, 5)] == PixelDataRGBA { 0xcd, 0xcd, 0xcd, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(0, 6)] == PixelDataRGBA { 0xf0, 0xf0, 0xf0, 255 });
+    REQUIRE(img.m_pixels[img.posToIndex(0, 7)] == PixelDataRGBA { 0xff, 0xff, 0xff, 255 });
 }
 
 TEST_CASE("make image from indexed ase with one layer", "[image, indexed]")
