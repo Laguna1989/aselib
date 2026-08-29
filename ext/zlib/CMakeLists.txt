@@ -23,16 +23,16 @@ include(FetchContent)
 
 file(WRITE "${CMAKE_BINARY_DIR}/_deps/zlib-patch.cmake" "
     file(READ \"${CMAKE_BINARY_DIR}/_deps/zlib-src/CMakeLists.txt\" _content)
-    string(REPLACE \"cmake_minimum_required(VERSION 2.4.4)\"
+    string(REPLACE \"cmake_minimum_required(VERSION 2.4.4...3.15.0)\"
         \"cmake_minimum_required(VERSION 3.24)\" _content \"\${_content}\")
     file(WRITE \"${CMAKE_BINARY_DIR}/_deps/zlib-src/CMakeLists.txt\" \"\${_content}\")
 ")
 
 FetchContent_Declare(zlib
-    URL https://www.zlib.net/zlib-1.2.13.tar.gz
-    https://www.zlib.net/fossils/zlib-1.2.13.tar.gz
-    https://github.com/madler/zlib/releases/download/v1.2.13/zlib-1.2.13.tar.gz
-    URL_HASH MD5=9b8aa094c4e5765dabf4da391f00d15c
+    URL https://www.zlib.net/zlib-1.3.1.tar.gz
+    https://www.zlib.net/fossils/zlib-1.3.1.tar.gz
+    https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz
+    URL_HASH MD5=9855b6d802d7fe5b7bd5b196a2271655
     PATCH_COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/_deps/zlib-patch.cmake"
 )
 FetchContent_MakeAvailableExcludeFromAll(zlib)
